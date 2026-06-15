@@ -16,3 +16,20 @@ htmlcov/
 
 .DS_Store
 Thumbs.db
+
+# Node dependencies
+node_modules/
+**/node_modules/
+client/dist/
+client/node_modules/
+server/node_modules/
+
+# Local database and uploads
+vector_db/
+vector_db_*/
+server/uploads/
+
+# Secret files
+.env
+.env.local
+server/.env

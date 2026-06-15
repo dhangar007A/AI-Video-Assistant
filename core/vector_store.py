@@ -8,6 +8,12 @@ CHROMA_DIR = "vector_db"
 COLLECTION_NAME = "meeting_transcript"
 EMBEDDING_MODEL  = "all-MiniLM-L6-v2"
 
+def get_chroma_dir():
+    meeting_id = os.getenv("MEETING_ID")
+    if meeting_id:
+        return f"vector_db_{meeting_id}"
+    return CHROMA_DIR
+
 def get_embeddings():
     return HuggingFaceEmbeddings(
         model_name = EMBEDDING_MODEL,
@@ -33,7 +39,7 @@ def build_vector_store(transcript : str)->Chroma:
         documents= docs,
         embedding=embeddings,
         collection_name=COLLECTION_NAME,
-        persist_directory=CHROMA_DIR
+        persist_directory=get_chroma_dir()
     )
 
     return vector_store
@@ -45,7 +51,7 @@ def load_vector_store() ->Chroma:
     vector_store = Chroma(
         collection_name=COLLECTION_NAME,
         embedding_function= embeddings,
-        persist_directory=CHROMA_DIR
+        persist_directory=get_chroma_dir()
     )
 
     return vector_store
